@@ -6,6 +6,10 @@ print('Welcome to python repo script')
 print('You can get some help by typing help :)')
 # print('If you are done with script please type exit and did not close the terminal window')
 print('Thank You!')
+global isLineage
+isLineage=os.path.isfile('manifests/snippets/lineage.xml')
+if isLineage==True:
+    print('Note : you are syncing LineageOS sources :)')
 cmd1=''
 cmd=''
 # add command in here by putting ,'commnad here'
@@ -34,6 +38,28 @@ def getrepoinfo(isPrinted,wasDown):
                 p1=lin[sl:sf]
                 p1="projects/"+p1+'.git'
                 lst.append(p1)
+    f.close()
+    
+    if isLineage==True:
+            f=open("manifests/snippets/lineage.xml",'r')
+            i=0
+            # Make a list of the directorys from manifests/snippets/lineage.xml
+            for lin in f:
+                    isstart=lin.startswith('  <project')
+                    if isstart:
+                        i=i+1
+                        src=lin.find("path")
+                        sl=lin.find('"',src)
+                        sl=sl+1
+                        st=lin.find("/",src)
+                        p=lin[sl:st]
+                        sf=lin.find('"',st)
+                        st=st+1
+                        p1=lin[sl:sf]
+                        p1="projects/"+p1+'.git'
+                        lst.append(p1)
+                        
+                        
     m=len(lst)
     # Chack what is exist or not and print info
     count=0
