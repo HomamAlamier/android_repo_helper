@@ -1,6 +1,16 @@
 #import test.py : the code added here
 import os
-
+import sys
+# print python ver
+global isPython3
+global pyVer
+pyVer=sys.version_info[0]
+if int(pyVer)==3:
+    isPython3=True
+else:
+    isPython3=False
+    input=raw_input
+    
 # Welcome Message
 print('Welcome to python repo script')
 print('You can get some help by typing help :)')
@@ -68,14 +78,20 @@ def getrepoinfo(isPrinted,wasDown):
             if isdr:
                 count=count+1
     reman=m-count
+    pers=count/m
+    pers=pers*100
+    pers=int(pers)
 #    return count
     if isPrinted==True:
         print("total objects :",m)
         if wasDown==0 :
-            print("objects downloaded :",count)
+            print("objects downloaded",str(pers)+'%')
+            print('files downloaded',count)
         else:
-            print("objects downloaded :",count,'(Was',wasDown+')')
+            print("objects downloaded percentage",str(pers)+'%')
+            print('files downloaded',count,'(Was',wasDown+')')
         print("Remaning :",reman)
+
 
 def getlastchange():
     global lastdown
@@ -110,7 +126,7 @@ while True:
                     getlastchange()
                     getrepoinfo(True,lastdown)
                 if cmd=='python ver':
-                    print("This py file runs only on python3 and newer")
+                    print("Python"+str(pyVer))
                 if cmd=='help':
                     gethelp()
                 if cmd=='exit':
