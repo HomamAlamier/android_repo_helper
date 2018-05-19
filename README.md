@@ -3,7 +3,7 @@
 my simple script to help with repo syncing sources
 it only have simple 4 commands for now
 
-the command is:
+the commands is:
 repo info
 python ver
 help
