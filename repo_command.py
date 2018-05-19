@@ -1,9 +1,14 @@
 #import test.py : the code added here
 import os
 import sys
+from os import walk
 # print python ver
 global isPython3
 global pyVer
+global myPath
+myPath=os.path.dirname(os.path.realpath(__file__))
+myPath=myPath+'/'
+print('running from',myPath)
 pyVer=sys.version_info[0]
 if int(pyVer)==3:
     isPython3=True
@@ -74,9 +79,16 @@ def getrepoinfo(isPrinted,wasDown):
     # Chack what is exist or not and print info
     count=0
     for z in lst:
+            print('checking',z)
             isdr=os.path.isdir(z)
             if isdr:
-                count=count+1
+                flist=[]
+                flist=getfilesindir(myPath+z+'/objects/')
+#                print(str(len(flist)))
+                for pck in flist:
+                    if pck=='pack':
+#                        print(z,'downloaded')
+                        count=count+1
     reman=m-count
     pers=count/m
     pers=pers*100
@@ -111,8 +123,16 @@ def savedata():
     getrepoinfo(False,0)
     lastchangefile.write(str(count))
     lastchangefile.close()
+
+def getfilesindir(ldir):
+    f=[]
+#    print(ldir)
+    f=os.listdir(ldir)
+#    print(f)
+    return f
     
 # Main
+getlastchange()
 while True:
     cmd=input('>')
     if cmd=='':
@@ -123,7 +143,6 @@ while True:
             if cmd==i:
                 found=1
                 if cmd=='repo info':
-                    getlastchange()
                     getrepoinfo(True,lastdown)
                 if cmd=='python ver':
                     print("Python"+str(pyVer))
